@@ -1,0 +1,218 @@
+<section>
+  <div class="mx-auto max-w-screen-md px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-x-16 gap-y-8">
+      <div class="rounded-lg bg-white p-8 shadow-lg lg:p-12">
+        <form class="space-y-4" action="/sections/packing/sendentry" method="post">
+
+          <input type="text" name="resultJson" value="{{.resultJson}}" hidden>
+          <h1 class="pb-4 text-center text-2xl font-bold sm:text-3xl">Nhập liệu Packing</h1>
+               
+          <div class="grid grid-cols-2 gap-4 text-center sm:grid-cols-2">
+            
+            <div>
+              <label for="factory1" tabindex="0"
+                class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                <input class="sr-only" value="1" id="factory1" type="radio" tabindex="-1" name="factory" checked/>
+                <span class="text-sm">Xưởng 1</span>
+              </label>
+            </div>
+
+            <div>
+              <label for="factory2" tabindex="0"
+                    class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                <input class="sr-only" value="2" id="factory2" type="radio" tabindex="-1" name="factory"/>
+                <span class="text-sm">Xưởng 2</span>
+              </label>
+            </div>
+
+            <div>
+              <label for="brand" tabindex="0"
+                    class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                <input class="sr-only" value="brand" id="brand" type="radio" tabindex="-1" name="prodtype" checked/>
+                <span class="text-sm">BRAND</span>
+              </label>
+            </div>
+
+            <div>
+              <label for="rh" tabindex="0"
+                    class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                <input class="sr-only" value="rh" id="rh" type="radio" tabindex="-1" name="prodtype" />
+                <span class="text-sm">RH</span>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>   
+              <select hx-post="/sections/packing/entry/maxpartqtyinput" hx-target="#slider-container" 
+                name="itempart" id="itempart" class="p-3 peer w-full rounded-lg border-gray-300 text-gray-700">
+                <option value="" disabled selected>Please select</option>
+                {{range .parts}}
+                <option value="{{.Id}}">{{.Name}}</option>
+                {{end}}
+              </select>
+            </div>
+
+            <div>
+              <label for="occurdate" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                <input type="date" id="occurdate" name="occurdate" placeholder="Ngày"
+                  class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 "/>
+                <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                  Ngày</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="slider-container" class="pt-20">
+            <!-- <div>
+              <label for="qty" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                <input type="number" id="qty" name="qty" placeholder="Số lượng" min="0"
+                  class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"/>
+                <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                  Số lượng (pcs)</span>
+              </label>
+            </div> -->
+
+          </div>
+          
+          <div class="mt-4 text-center">
+            <button
+              type="submit" class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto">
+              Gửi Báo Cáo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @property --val {
+    syntax: '<integer>';
+    inherits: true;
+    initial-value: 0; 
+  }
+  @property --e {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0; 
+  }
+  
+  .slider-label {
+    --c: #547980; /* slider color */
+    --g: round(.3em,1px);  /* the gap */
+    --l: round(.2em,1px);  /* line thickness*/
+    --s: round(1.3em,1px); /* thumb size*/
+    --t: round(.8em,1px);  /* tooltip tail size */
+    --r: round(.8em,1px);  /* tooltip radius */
+    
+    timeline-scope: --thumb-view;
+    translate: 0; /* No, It's not useless so don't remove it (or remove it and see what happens) */ 
+    font-size: 24px;
+  }
+  
+  .slider-input {
+    width: 100%;
+    height: var(--s); /* needed for Firefox*/
+    --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
+    appearance :none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: inherit;
+  }
+  .slider-input:focus-visible,
+  .slider-input:hover{
+    --p: 25%;
+  }
+  .slider-input:active,
+  .slider-input:focus-visible{
+    --_b: var(--s)
+  }
+  /* chromium */
+  .slider-input[type="range" i]::-webkit-slider-thumb{
+    height: var(--s);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 0 var(--_b,var(--l)) inset var(--_c);
+    border-image: linear-gradient(90deg,var(--_c) 50%,#ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+    -webkit-appearance: none;
+    appearance: none;
+    transition: .3s;
+    anchor-name: --thumb;
+    view-timeline: --thumb-view inline;
+    view-timeline-inset: var(--s);
+  }
+  /* Firefox */
+  .slider-input[type="range"]::-moz-range-thumb {
+    height: var(--s);
+    width: var(--s);
+    background: none;
+    border-radius: 50%;
+    box-shadow: 0 0 0 var(--_b,var(--l)) inset var(--_c);
+    border-image: linear-gradient(90deg,var(--_c) 50%,#ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+    -moz-appearance: none;
+    appearance: none;
+    transition: .3s;
+    anchor-name: --thumb;
+    view-timeline: --thumb-view inline;
+    view-timeline-inset: var(--s);
+  }
+  .slider-output {
+    background: #CC333F;
+    --val:var(--min);
+    animation: range linear;
+    animation-timeline: --thumb-view;
+  }
+  .slider-output:before {
+    content: counter(num);
+    counter-reset: num var(--val);
+    position-anchor: --thumb;
+    position: absolute;
+    inset-area: top span-all;
+    color: #fff;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    padding-block: .5em;
+    width: 4em;
+    background: inherit;
+    --e: var(--val);
+    transition: --e .1s ease-out;
+    rotate: calc((var(--e) - var(--val))*2deg);
+    transform-origin: 50% calc(100% + var(--s)/2);
+    border-bottom: var(--t) solid #0000;
+    border-radius: var(--r)/var(--r) var(--r) calc(var(--r) + var(--t)) calc(var(--r) + var(--t));
+    --_m: 100%/var(--t) var(--t) no-repeat;
+    --_g: 100%,#0000 99%,#000 102%;
+    mask:
+      linear-gradient(#000 0 0) padding-box,
+      radial-gradient(100% 100% at 100% var(--_g)) calc(50% + var(--t)/2) var(--_m),
+      radial-gradient(100% 100% at 0    var(--_g)) calc(50% - var(--t)/2) var(--_m);
+  }
+  .slider-output.bottom:before {
+    inset-area: bottom span-all;
+    border-top: var(--t) solid #0000;
+    border-bottom: none;
+    rotate: calc((var(--val) - var(--e))*2deg);
+    transform-origin: 50% calc(var(--s)/-2);
+    border-radius: var(--r)/calc(var(--r) + var(--t)) calc(var(--r) + var(--t)) var(--r) var(--r);
+    --_m: 0%/var(--t) var(--t) no-repeat;
+    --_g: 0%,#0000 99%,#000 102%;
+  }
+  
+  @keyframes range {
+    0% {background: #8A9B0F;--val:var(--max)}
+  }
+  
+  @supports not (anchor-name: ---) {
+    output {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById("occurdate").valueAsDate = new Date();
+</script>

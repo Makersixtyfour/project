@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script defer src="/static/js/alpine.3.13.10.min.js"></script>
+  <script src="/static/js/htmx.min.js"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+  <div
+  x-data="{
+      tabSelected: 1,
+      tabId: $id('tabs'),
+      tabButtonClicked(tabButton){
+          this.tabSelected = tabButton.id.replace(this.tabId + '-', '');
+          this.tabRepositionMarker(tabButton);
+      },
+      tabRepositionMarker(tabButton){
+          this.$refs.tabMarker.style.width=tabButton.offsetWidth + 'px';
+          this.$refs.tabMarker.style.height=tabButton.offsetHeight + 'px';
+          this.$refs.tabMarker.style.left=tabButton.offsetLeft + 'px';
+      },
+      tabContentActive(tabContent){
+          return this.tabSelected == tabContent.id.replace(this.tabId + '-content-', '');
+      }
+  }"
+  
+  x-init="tabRepositionMarker($refs.tabButtons.firstElementChild);" class="relative w-full max-w-sm">
+  
+  <div x-ref="tabButtons" class="relative inline-grid items-center justify-center w-full h-10 grid-cols-2 p-1 text-gray-500 bg-gray-100 rounded-lg select-none">
+      <button :id="$id(tabId)" @click="tabButtonClicked($el);" type="button" class="relative z-20 inline-flex items-center justify-center w-full h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap">Login</button>
+      <button :id="$id(tabId)" @click="tabButtonClicked($el);" type="button" class="relative z-20 inline-flex items-center justify-center w-full h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap">Request</button>
+      <div x-ref="tabMarker" class="absolute left-0 z-10 w-1/2 h-full duration-300 ease-out" x-cloak><div class="w-full h-full bg-white rounded-md shadow-sm"></div></div>
+  </div>
+  <div class="relative w-full mt-2 content">
+      <div :id="$id(tabId + '-content')" x-show="tabContentActive($el)" class="relative">
+          <!-- Tab Content 1 -->
+          <form action="/login" method="post">
+            <div class="border rounded-lg shadow-sm bg-card text-neutral-900">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-lg font-semibold leading-none tracking-tight">Account</h3>
+                    <p class="text-sm text-neutral-500">
+                        {{ .msg }}
+                    </p>
+                </div>
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="space-y-1"><label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="username">Username</label><input type="text" id="username" name="username" placeholder="guest" class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md peer border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50" /></div>
+                    <div class="space-y-1"><label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="password">Password</label><input type="password" id="password" name="password" placeholder="guest" class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md peer border-neutral-300 ring-offset-background focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50" /></div>
+                </div>
+                <div class="flex justify-between items-center p-6 pt-0">
+                  <button type="submit" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-neutral-950 hover:bg-neutral-900 focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 focus:shadow-outline focus:outline-none">
+                    Log in
+                  </button>
+                </div>
+            </div>
+          </form>
+          <!-- End Tab Content 1 -->
+      </div>
+
+      <div :id="$id(tabId + '-content')" x-show="tabContentActive($el)" class="relative" x-cloak>
+          <!-- Tab Content 2 -->
+          <form>
+            <div class="border rounded-lg shadow-sm bg-card text-neutral-900">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-lg font-semibold leading-none tracking-tight">Request</h3>
+                    <p id="requestMsg" class="text-sm text-neutral-500 sample-transition">Asking an account, reporting some errors or sending a message to admin here.</p>
+                </div>
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="space-y-1"><label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="info">Staff ID or Name or Phone</label><input type="text" name="info" placeholder="90020 or Trần Văn A or 0903123456" id="info" class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md peer border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50" /></div>
+                    <div class="space-y-1"><label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="reason">Message</label><input type="text" name="reason" placeholder="Nhập báo cáo chất lượng/ Quên mật khẩu" id="reason" class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50" /></div>
+                </div>
+                <div class="flex items-center p-6 pt-0">
+                    <button hx-post="/request" hx-target="#requestMsg" hx-swap="innerHTML transition:true" 
+                        type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md bg-neutral-950 hover:bg-neutral-900 focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 focus:shadow-outline focus:outline-none">        
+                        Send Request
+                    </button>
+                </div>
+            </div>
+          </form>
+          
+          <!-- End Tab Content 2 -->
+      </div>
+
+  </div>
+</div>
+  
+</body>
+</html>
+
+<style>
+    @keyframes fade-in {
+      from { opacity: 0; }
+    }
+ 
+    @keyframes fade-out {
+      to { opacity: 0; }
+    }
+ 
+    @keyframes slide-from-right {
+      from { transform: translateX(90px); }
+    }
+ 
+    @keyframes slide-to-left {
+      to { transform: translateX(-90px); }
+    }
+ 
+    /* define animations for the old and new content */
+    ::view-transition-old(slide-it) {
+      animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+      600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+    }
+    ::view-transition-new(slide-it) {
+      animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+      600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+    }
+ 
+    /* tie the view transition to a given CSS class */
+    .sample-transition {
+        view-transition-name: slide-it;
+    }
+     
+</style>

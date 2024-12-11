@@ -1,0 +1,819 @@
+{{ define "navbar" }}
+<link rel="stylesheet" href="/static/css/style.css">
+<div x-data="{open: false,slideOverOpen: false,navigationMenuOpen: false,navigationMenu: '',navigationMenuCloseDelay: 200,navigationMenuCloseTimeout: null,navigationMenuLeave() {let that = this;
+this.navigationMenuCloseTimeout = setTimeout(() => {
+that.navigationMenuClose();
+}, this.navigationMenuCloseDelay);
+},navigationMenuReposition(navElement) {this.navigationMenuClearCloseTimeout();this.$refs.navigationDropdown.style.left = navElement.offsetLeft + 'px';this.$refs.navigationDropdown.style.marginLeft = (navElement.offsetWidth/2) + 'px';},navigationMenuClearCloseTimeout(){
+clearTimeout(this.navigationMenuCloseTimeout);
+},
+navigationMenuClose(){
+this.navigationMenuOpen = false;
+this.navigationMenu = '';
+}
+}" 
+class="bg-white border rounded-md text-neutral-700 border-neutral-200/80">
+<div class="mx-auto flex flex-1 justify-between items-center p-1 ">
+<!-- <div class="text-neutral-700 font-bold text-xl">Logo</div> -->
+
+<button class="text-gray-500 w-10 h-10 relative focus:outline-none bg-white" @click="slideOverOpen=true, open=!open">
+<span class="sr-only">Open main menu</span>
+<div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+<span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
+<span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'opacity-0': open } "></span>
+<span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
+</div>
+</button>
+
+<template x-teleport="body">
+<div 
+x-show="slideOverOpen"
+@keydown.window.escape="slideOverOpen=false, open=!open"
+class="relative z-[99]">
+<div x-show="slideOverOpen" x-transition.opacity.duration.600ms @click="slideOverOpen = false" class="fixed inset-0 bg-black bg-opacity-10"></div>
+<div class="fixed inset-0 overflow-hidden">
+<div class="absolute inset-0 overflow-auto">
+<div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+<div 
+x-show="slideOverOpen" 
+@click.away="slideOverOpen = false, open=!open"
+x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700" 
+x-transition:enter-start="translate-x-full" 
+x-transition:enter-end="translate-x-0" 
+x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700" 
+x-transition:leave-start="translate-x-0" 
+x-transition:leave-end="translate-x-full" 
+class="w-screen max-w-full">
+<div class="flex flex-col h-full py-5 overflow-y-scroll bg-white border-l shadow-lg border-neutral-100/70">
+<div class="px-4 sm:px-5">
+<div class="flex items-start justify-between pb-1">
+<h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Full-screen Slide Over Title</h2>
+<div class="flex items-center h-auto ml-3">
+<button @click="slideOverOpen=false, open=!open" class="absolute top-0 right-0 z-30 flex items-center justify-center px-3 py-2 mt-4 mr-5 space-x-1 text-xs font-medium uppercase border rounded-md border-neutral-200 text-neutral-600 hover:bg-neutral-100">
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+<span>Close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ----------------- -->
+<!-- routes in sidebar -->
+<!-- ----------------- -->
+<div class="relative flex-1 px-4 mt-5 sm:px-5">
+<div class="absolute inset-0 px-4 sm:px-5">
+<div class="relative h-full overflow-auto border border-dashed rounded-md border-neutral-300">
+<!-- <a href="/gnhh/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Giao nhận</span>
+<span class="block leading-5 opacity-50">Trang tổng quan Giao nhận.</span>
+</a> -->
+<!-- <a href="/" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Home</span>
+<span class="block font-light leading-5 opacity-50">Go to the Home page.</span>
+</a> -->
+<a href="/dashboard" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Dashboard</span>
+<span class="block leading-5 opacity-50">Mô tả ngắn ngọn cho menu này.</span>
+</a>
+<!-- <a href="/incentive/evaluate" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Chấm điểm</span>
+<span class="block leading-5 opacity-50">Trang chấm điểm công nhân viên.</span>
+</a>
+<a href="/incentive/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tra cứu</span>
+<span class="block leading-5 opacity-50">Trang tra cứu điểm công nhân viên.</span>
+</a> -->
+<!-- <a href="/sections/cutting/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan Cutting</span>
+<span class="block font-light leading-5 opacity-50">Trang thông tin bộ phận Cutting.</span>
+</a> -->
+<a href="/sections/cutting/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Cutting</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Cutting.</span>
+</a>
+<a href="/sections/cutting/woodrecoveryentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Wood Recovery</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu Wood Recovery của bộ phận Cutting.</span>
+</a>
+<a href="/sections/lamination/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Lamination</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Lamination.</span>
+</a>
+<a href="/sections/reededline/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Reededline</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Reededline.</span>
+</a>
+<a href="/sections/output/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Output</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu cho Output.</span>
+</a>
+<a href="/sections/panelcnc/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Panel CNC</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Panel CNC.</span>
+</a>
+<a href="/sections/finemill/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Finemill</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Finemill.</span>
+</a>
+<a href="/sections/veneer/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Veneer</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Veneer Lamination.</span>
+</a>
+<a href="/sections/assembly/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Assembly</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Assembly.</span>
+</a>
+<a href="/sections/assembly/planentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Plan Assembly</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập plan hằng ngày của bộ phận Assembly.</span>
+</a>
+<a href="/sections/woodfinish/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Wood Finish</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Wood Finish.</span>
+</a>
+<a href="/sections/pack/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Packing</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Packing.</span>
+</a>
+<a href="/sections/outsource/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Outsource</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu cho Outsource.</span>
+</a>
+<a href="/sections/slicing/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Slicing</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu cho Slicing.</span>
+</a>
+<!-- <a href="/downtime/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Downtime</span>
+<span class="block font-light leading-5 opacity-50">Copy Paste dữ liệu downtime.</span>
+</a> -->
+<a href="/quality/fastentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Quality</span>
+<span class="block font-light leading-5 opacity-50">Copy Paste dữ liệu quality.</span>
+</a>
+<!-- <a href="/6s/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu 6S</span>
+<span class="block font-light leading-5 opacity-50">Copy Paste dữ liệu cho 6S.</span>
+</a> -->
+<!-- <a href="/safety/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Safety</span>
+<span class="block font-light leading-5 opacity-50">Copy Paste dữ liệu cho Safety.</span>
+</a> -->
+<a href="/target/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Đặt Target</span>
+<span class="block font-light leading-5 opacity-50">Trang đặt target cho các bộ phận.</span>
+</a>
+<a href="/manhr/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý manhr</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập và quản lý manhr cho các bộ phận.</span>
+</a>
+<a href="/mixingcolor" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Mixing Color</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập và quản lý cho các Mixing Color.</span>
+</a>
+<!-- <a href="/sections/lamination/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan Lamination</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan của bộ phận Lamination.</span>
+</a> -->
+<a href="/sections/cutting/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Cutting</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý của bộ phận Cutting.</span>
+</a>
+<a href="/sections/lamination/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Lamination</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý của bộ phận Lamination.</span>
+</a>           
+<a href="/sections/reededline/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Reededline</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Reededline.</span>
+</a>
+<a href="/sections/output/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Output</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo Output.</span>
+</a>                                         
+<a href="/sections/panelcnc/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Panel CNC</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Panel CNC.</span>
+</a>                                        
+<a href="/sections/veneer/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Veneer</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Veneer Lamination.</span>
+</a>                                    
+<a href="/sections/assembly/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Assembly</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Assembly.</span>
+</a>                                              
+<a href="/sections/woodfinish/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Finish</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Wood Finish.</span>
+</a>
+<a href="/sections/pack/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý Packing</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý báo cáo của bộ phận Packing.</span>
+</a>
+<!-- <a href="/sections/packing/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Packing</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo nhập liệu của bộ phận Packing.</span>
+</a> -->
+
+
+<!-- <a href="/mo/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Mo</span>
+<span class="block leading-5 opacity-50">Trang nhập liệu cho Mo.</span>
+</a> -->
+<!-- <a href="/6s/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu 6S</span>
+<span class="block font-light leading-5 opacity-50">Trang gửi báo cáo chấm điểm 6S.</span>
+</a> -->
+<!-- <a href="/hr/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu HR</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập liệu nhân sự.</span>
+</a> -->
+<!-- <a href="/colormixing/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Overview of Color Mixing</span>
+<span class="block leading-5 opacity-50"></span>
+</a>
+<a href="/mixingcolor/usingentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Báo cáo của Color Mixing</span>
+<span class="block leading-5 opacity-50"></span>
+</a> -->
+<a href="/login" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Đăng nhập</span>
+<span class="block leading-5 opacity-50"></span>
+</a>
+<a href="/logout" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Đăng xuất</span>
+<span class="block leading-5 opacity-50"></span>
+</a>
+</div>
+</div>
+</div>
+<!-- end routes in sidebar -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</template>
+
+<!-- ---------------------- -->
+<!-- routes in large screen -->
+<!-- ---------------------- -->
+<div class="hidden lg:flex">
+<ul class="lg:flex space-x-4">
+<li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Sections', 'hover:bg-neutral-100' : navigationMenu!='Sections' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Sections'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Sections</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Sections' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li>
+<!-- <li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/home">Home</a></li> -->
+<li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/dashboard">Dashboard</a></li>
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='MO', 'hover:bg-neutral-100' : navigationMenu!='MO' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='MO'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>MO</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'MO' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Item', 'hover:bg-neutral-100' : navigationMenu!='Item' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Item'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Item</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Item' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+
+<li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Quality', 'hover:bg-neutral-100' : navigationMenu!='Quality' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Quality'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Quality</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Quality' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li>
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Downtime', 'hover:bg-neutral-100' : navigationMenu!='Downtime' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Downtime'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Downtime</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Downtime' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Mixingcolor', 'hover:bg-neutral-100' : navigationMenu!='Mixingcolor' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Mixingcolor'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>temp</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Mixingcolor' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Color Mixing', 'hover:bg-neutral-100' : navigationMenu!='Color Mixing' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Color Mixing'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Color Mixing</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Color Mixing' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<!-- <li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/mixingcolor">Mixing Color</a></li> -->
+
+<!-- <li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/batchcontrol">Batch Control</a></li> -->
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Incentive', 'hover:bg-neutral-100' : navigationMenu!='Incentive' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Incentive'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Incentive</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Incentive' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='HR', 'hover:bg-neutral-100' : navigationMenu!='HR' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='HR'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>HR</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'HR' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='GNHH', 'hover:bg-neutral-100' : navigationMenu!='GNHH' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='GNHH'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>GNHH</span> 
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'GNHH' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='6S', 'hover:bg-neutral-100' : navigationMenu!='6S' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='6S'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>6S</span>
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == '6S' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+
+<!-- <li>
+<button
+:class="{ 'bg-neutral-100' : navigationMenu=='Safety', 'hover:bg-neutral-100' : navigationMenu!='Safety' }" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='Safety'" @mouseleave="navigationMenuLeave()" class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max">
+<span>Safety</span>
+<svg :class="{ '-rotate-180' : navigationMenuOpen==true && navigationMenu == 'Safety' }" class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</li> -->
+<li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/login">Login</a></li>
+<li><a class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max" 
+href="/logout">Logout</a></li>
+</ul>
+</div>
+<!-- routes in large screen -->
+</div>
+
+<!-- dropdownMenu -->
+<div x-ref="navigationDropdown" x-show="navigationMenuOpen"
+x-transition:enter="transition ease-out duration-100"
+x-transition:enter-start="opacity-0 scale-90"
+x-transition:enter-end="opacity-100 scale-100"
+x-transition:leave="transition ease-in duration-100"
+x-transition:leave-start="opacity-100 scale-100"
+x-transition:leave-end="opacity-0 scale-90"
+@mouseover="navigationMenuClearCloseTimeout()" @mouseleave="navigationMenuLeave()"
+class="absolute z-40 top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
+
+<div class="flex justify-center w-auto h-auto overflow-auto bg-white border rounded-md shadow-sm border-neutral-200/70">
+
+<!-- Item -->
+<!-- <div x-show="navigationMenu == 'Item'" class="flex items-stretch justify-center w-full max-w-2xl p-6 gap-x-3">
+<div class="w-72">
+<a href="/item/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan theo dõi Item.</span>
+</a>
+<a href="/item/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+<span class="block leading-5 opacity-50">Trang nhập liệu cho Item.</span>
+</a>
+<a href="/item/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+<span class="block leading-5 opacity-50">Trang quản lý chỉnh sửa Item.</span>
+</a>
+</div>
+</div> -->
+<!-- end Item -->
+
+<!-- Mo -->
+<!-- <div x-show="navigationMenu == 'MO'" class="flex items-stretch justify-center w-full max-w-2xl p-6 gap-x-3">
+<div class="w-72">
+<a href="/mo/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan theo dõi MO.</span>
+</a>
+<a href="/mo/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+<span class="block leading-5 opacity-50">Trang nhập liệu cho MO.</span>
+</a>
+<a href="/mo/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+<span class="block leading-5 opacity-50">Trang quản lý chỉnh sửa MO.</span>
+</a>
+</div>
+</div> -->
+<!-- end MO -->
+
+<!-- Sections -->
+<div x-show="navigationMenu == 'Sections'" class="flex items-stretch justify-center w-full max-w-4xl p-4 gap-x-3">
+<div>
+<div class="w-44">
+<h1>Cutting</h1>
+<a href="/sections/cutting/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/cutting/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/cutting/entry/return" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Trả kho</span>
+</a>
+<a href="/sections/cutting/entry/fine" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập tinh</span>
+</a>
+<a href="/sections/cutting/woodrecoveryentry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Wood Recovery</span>
+</a>
+<a href="/sections/cutting/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+
+<div class="w-44">
+<h1>Lamination</h1>
+<a href="/sections/lamination/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/lamination/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/lamination/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+
+<div class="w-44">
+<h1>Reededline</h1>
+<a href="/sections/reededline/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/reededline/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/reededline/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div> 
+</div>
+
+<div>
+<div class="w-44">
+<h1>Veneer Lamination</h1>
+<a href="/sections/veneer/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/veneer/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/veneer/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+<div class="w-44">
+<h1>Panel CNC</h1>
+<a href="/sections/panelcnc/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/panelcnc/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/panelcnc/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+
+<div class="w-44">
+<h1>Finemill</h1>
+<a href="/sections/finemill/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a>
+<a href="/sections/finemill/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/finemill/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a>
+</div>
+
+<div class="w-44">
+<h1>Manhr</h1>
+<!-- <a href="/manhr/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a> -->
+<!-- <a href="/manhr/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a> -->
+<a href="/manhr/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a>
+</div>
+</div>
+
+<div>
+<div class="w-44">
+<h1>Assembly</h1>
+<a href="/sections/assembly/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a>
+<a href="/sections/assembly/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/assembly/planentry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Plan</span>
+</a>
+<a href="/sections/assembly/inventoryentry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Inventory</span>
+</a>
+<a href="/sections/assembly/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a>
+
+</div>
+
+<div class="w-44">
+<h1>Wood Finishing</h1>
+<a href="/sections/woodfinish/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/woodfinish/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/woodfinish/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+
+<!-- <div class="w-44">
+<h1>Packing</h1>
+<a href="/sections/packing/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/packing/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/packing/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div> -->
+<div class="w-44">
+<h1>Pack</h1>
+<a href="/sections/pack/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a>
+<a href="/sections/pack/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/pack/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a>
+</div>
+<div class="w-44">
+<h1>Target</h1>
+<!-- <a href="/target/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng Quan</span>
+</a> -->
+<a href="/target/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Đặt Target</span>
+</a>
+<!-- <a href="/target/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản Lý</span>
+</a> -->
+</div>
+</div>
+
+<div>
+<div class="w-44">
+<h1>Output</h1>
+<a href="/sections/output/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a>
+<a href="/sections/output/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/output/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a>
+</div>
+
+<div class="w-44">
+<h1>Outsource</h1>
+<!-- <a href="/sections/output/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a> -->
+<a href="/sections/outsource/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<!-- <a href="/sections/output/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a> -->
+</div>
+
+<div class="w-44">
+<h1>Slicing</h1>
+<!-- <a href="/sections/output/overview" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a> -->
+<a href="/sections/slicing/entry" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập Liệu</span>
+</a>
+<a href="/sections/slicing/admin" @click="navigationMenuClose()" class="block px-3.5 py-1 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+</a>
+</div>
+</div>
+
+</div>
+<!-- end Sections -->
+
+<!-- Downtime -->
+<!-- <div x-show="navigationMenu == 'Downtime'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-44"> -->
+<!-- <a href="/incentive/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tra cứu điểm</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan về điểm của nhân viên.</span>
+</a> -->
+<!-- <a href="/downtime/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu</span>
+<span class="block font-light leading-5 opacity-50">Nhập liệu nhanh cho downtime.</span>
+</a> -->
+<!-- <a href="/incentive/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý, đặt ra các tiêu chí, phân quyền người chấm điểm.</span>
+</a>         -->
+<!-- </div>
+</div> -->
+
+<!-- Mixing Color -->
+<div x-show="navigationMenu == 'Mixingcolor'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-44">
+<a href="/mixingcolor" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+</a>
+<!-- <a href="/mixingcolor/batchentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu</span>
+</a> -->
+<a href="/mixingcolor/usingentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Cập nhật báo cáo sử dụng</span>
+</a>
+<!-- <a href="/mixingcolor/colorentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100"></a>
+<span class="block mb-1 font-medium text-black">Nhập liệu color panel</span>
+</a> -->
+<!-- <a href="/incentive/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý, đặt ra các tiêu chí, phân quyền người chấm điểm.</span>
+</a>         -->
+</div>
+</div>
+
+<!-- Color Mixing -->
+<div x-show="navigationMenu == 'Color Mixing'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-44">
+<a href="/colormixing/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tổng quan</span>
+<!-- <span class="block font-light leading-5 opacity-50">Trang tổng quan về điểm của nhân viên.</span> -->
+</a>
+<a href="/colormixing/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<!-- <span class="block font-light leading-5 opacity-50">Trang tổng quan về điểm của nhân viên.</span> -->
+</a>
+<!-- <a href="/incentive/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý, đặt ra các tiêu chí, phân quyền người chấm điểm.</span>
+</a>         -->
+</div>
+</div>
+<!-- Color Mixing -->
+
+<!-- Quality -->
+<div x-show="navigationMenu == 'Quality'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-44">
+<!-- <a href="/incentive/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tra cứu điểm</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan về điểm của nhân viên.</span>
+</a> -->
+<a href="/quality/fastentry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập nhanh</span>
+<span class="block font-light leading-5 opacity-50">Copy paste báo cáo quality.</span>
+</a>
+<!-- <a href="/incentive/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý, đặt ra các tiêu chí, phân quyền người chấm điểm.</span>
+</a>         -->
+</div>
+</div>
+<!-- End Quality -->
+
+<!-- Incentive -->
+<!-- <div x-show="navigationMenu == 'Incentive'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-44">
+<a href="/incentive/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Tra cứu điểm</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan về điểm của nhân viên.</span>
+</a>
+<a href="/incentive/evaluate" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Chấm điểm</span>
+<span class="block font-light leading-5 opacity-50">Trang dành cho tổ trưởng, giám sát,... ghi nhận sự việc.</span>
+</a>
+<a href="/incentive/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Quản lý</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý, đặt ra các tiêu chí, phân quyền người chấm điểm.</span>
+</a>        
+</div>
+</div> -->
+<!-- End Incentive -->
+
+<!-- HR -->
+<!-- <div x-show="navigationMenu == 'HR'" class="flex items-stretch justify-center w-full p-6"> -->
+<!-- <div class="w-72">
+<a href="/hr/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Overview</span> -->
+<!-- <span class="block font-light leading-5 opacity-50">Trang nhập liệu nhân sự.</span> -->
+<!-- </a>
+<a href="/hr/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Entry</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập liệu nhân sự.</span>
+</a>
+<a href="/hr/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Manament</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý nhân sự.</span>
+</a>        
+</div>
+</div> -->
+<!-- End HR -->
+
+<!-- GNHH -->
+<!-- <div x-show="navigationMenu == 'GNHH'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-72"> -->
+<!-- <a href="/gnhh/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Overview</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập liệu nhân sự.</span>
+</a>
+<a href="/gnhh/entry/import" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Import</span>
+<span class="block font-light leading-5 opacity-50">Import initial file.</span>
+</a> -->
+<!-- <a href="/hr/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Manament</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý nhân sự.</span>
+</a>         -->
+<!-- </div>
+</div> -->
+<!-- End GNHH -->
+
+<!-- 6S -->
+<!-- <div x-show="navigationMenu == '6S'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-72"> -->
+<!-- <a href="/6s/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Overview</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan về 6S.</span>
+</a> -->
+<!-- <a href="/6s/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Evaluate</span>
+<span class="block font-light leading-5 opacity-50">Trang chấm điểm 6S.</span>
+</a> -->
+<!-- <a href="/6s/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Manament</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý 6S.</span>
+</a>         -->
+<!-- </div>
+</div> -->
+<!-- End 6S -->
+
+<!-- Safety -->
+<!-- <div x-show="navigationMenu == 'Safety'" class="flex items-stretch justify-center w-full p-6">
+<div class="w-72"> -->
+<!-- <a href="/6s/overview" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Overview</span>
+<span class="block font-light leading-5 opacity-50">Trang tổng quan về 6S.</span>
+</a> -->
+<!-- <a href="/safety/entry" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Nhập liệu Safety</span>
+<span class="block font-light leading-5 opacity-50">Trang nhập liệu Safety.</span>
+</a> -->
+<!-- <a href="/6s/admin" @click="navigationMenuClose()" class="block px-3.5 py-3 text-sm rounded hover:bg-neutral-100">
+<span class="block mb-1 font-medium text-black">Manament</span>
+<span class="block font-light leading-5 opacity-50">Trang quản lý 6S.</span>
+</a>         -->
+<!-- </div>
+</div> -->
+<!-- End Safety -->
+
+</div>
+</div>
+<!-- end dropdownMenu -->
+</div>
+{{ end }}

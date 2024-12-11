@@ -1,0 +1,279 @@
+<div class="fade-in col-span-full lg:col-span-3 relative px-4 pt-2 overflow-hidden">
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Báo cáo Packing</h2>
+        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{.numberOfReports}} báo cáo</span>
+      </div>
+    </div>
+
+    <div class="flex items-center pt-2 gap-x-3">
+      <div x-data="{
+        popoverOpen: false,
+        popoverArrow: true,
+        popoverPosition: 'bottom',
+        popoverHeight: 0,
+        popoverOffset: 8,
+        popoverHeightCalculate() {
+          this.$refs.popover.classList.add('invisible'); 
+          this.popoverOpen=true; 
+          let that=this;
+          $nextTick(function(){ 
+            that.popoverHeight = that.$refs.popover.offsetHeight;
+            that.popoverOpen=false; 
+            that.$refs.popover.classList.remove('invisible');
+            that.$refs.popoverInner.setAttribute('x-transition', '');
+            that.popoverPositionCalculate();
+          });
+        },
+        popoverPositionCalculate(){
+          if(window.innerHeight < (this.$refs.popoverButton.getBoundingClientRect().top + this.$refs.popoverButton.offsetHeight + this.popoverOffset + this.popoverHeight)){
+            this.popoverPosition = 'top';
+          } else {
+            this.popoverPosition = 'bottom';
+          }
+        }
+        }"
+        x-init="
+          that = this;
+          window.addEventListener('resize', function(){
+            popoverPositionCalculate();
+          });
+          $watch('popoverOpen', function(value){
+            if(value){ popoverPositionCalculate(); document.getElementById('packingFromDate').focus();  }
+          });
+        "
+        class="relative">
+
+        <button x-ref="popoverButton" @click="popoverOpen=!popoverOpen" class="flex items-center justify-center w-8 h-8 bg-white border rounded-full shadow-sm cursor-pointer hover:bg-neutral-100 focus-visible:ring-gray-400 focus-visible:ring-2 focus-visible:outline-none active:bg-white border-neutral-200/70">
+          <svg class="w-4 h-4" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <div x-ref="popover"
+            x-show="popoverOpen"
+            x-init="setTimeout(function(){ popoverHeightCalculate(); }, 100);"
+            x-trap.inert="popoverOpen"
+            @click.away="popoverOpen=false;"
+            @keydown.escape.window="popoverOpen=false"
+            :class="{ 'top-0 mt-12' : popoverPosition == 'bottom', 'bottom-0 mb-1' : packingFromDate == 'top' }"
+            class="absolute w-[300px] z-40 max-w-lg -translate-x-full -translate-y-6" x-cloak>
+          <div x-ref="popoverInner" x-show="popoverOpen" class="w-full p-4 bg-white border rounded-md shadow-sm border-neutral-200/70">
+            <div x-show="popoverArrow && popoverPosition == 'bottom'" class="absolute top-0 inline-block w-5 mt-px overflow-hidden -translate-x-2 -translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-bottom-left transform rotate-45 bg-white border-t border-l rounded-sm"></div></div>
+            <div x-show="popoverArrow  && popoverPosition == 'top'" class="absolute bottom-0 inline-block w-5 mb-px overflow-hidden -translate-x-2 translate-y-2.5 left-1/2"><div class="w-2.5 h-2.5 origin-top-left transform -rotate-45 bg-white border-b border-l rounded-sm"></div></div>
+            <div class="grid gap-4">
+              <div class="space-y-2">
+                <h4 class="font-medium leading-none">Options</h4>
+                <p class="text-sm text-muted-foreground"></p>
+              </div>
+              <form>
+                <div class="grid gap-2">
+                  
+                  <!-- <div class="grid items-center grid-cols-3 gap-4">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="width">
+                      Chart
+                    </label>
+                    <div class="col-span-2 w-full">
+                      <select @change="popoverOpen=!popoverOpen;"
+                        hx-post="" hx-trigger="input, change" hx-target="#cutting-container" hx-swap="innerHTML settle:200ms"
+                        name="cuttingcharttype" id="cuttingcharttype" class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm">
+                        <option value="general">General</option>
+                        <option value="woodtype">WoodType</option>
+                      </select>
+                    </div>
+                  </div> -->
+
+                  <div class="grid items-center grid-cols-3 gap-4">
+                    <label for="packingFromDate" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      From Date
+                    </label>
+                    <input hx-post="/sections/pack/overview/reportdatefilter" hx-trigger="input" hx-target="#report-tbody" hx-swap="outerHTML settle:200ms"
+                      type="date" id="packingFromDate" name="packingFromDate" value="" class="flex w-full h-8 col-span-2 px-3 py-2 text-sm bg-transparent border rounded-md border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                  </div>
+
+                  <div class="grid items-center grid-cols-3 gap-4">
+                    <label for="packingToDate" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      To Date
+                    </label>
+                    <input hx-post="/sections/pack/overview/reportdatefilter" hx-trigger="input" hx-target="#report-tbody" hx-swap="outerHTML settle:200ms"
+                      type="date" id="packingToDate" name="packingToDate" value="" class="flex w-full h-8 col-span-2 px-3 py-2 text-sm bg-transparent border rounded-md border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                  </div>
+  
+                  <!-- <div class="grid items-center grid-cols-3 gap-4">
+                    <label for="cuttinglimit" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      Limit
+                    </label>
+                    <input id="cuttinglimit" name="cuttinglimit" value="20" class="flex w-full h-8 col-span-2 px-3 py-2 text-sm bg-transparent border rounded-md border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                  </div> -->
+                
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div x-data="{
+    showReportDropdown:false,
+    filter:'itemcode',
+    filterLabel: 'Mã sản phẩm',
+    }"
+    class="mt-3 md:flex space-x-2 md:items-center md:justify-between">
+
+    <form class="w-full">
+        <div class="relative w-full flex items-center mt-4 md:mt-0">
+            <input type="text" :value="filter" name="searchFilter" hidden>
+            <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">filter</label>
+            <button x-text="filterLabel" @click="showReportDropdown=!showReportDropdown" id="reportdropdown-button" 
+                class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+                
+                <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+
+            <div x-show="showReportDropdown" 
+                id="reportdropdown" class="absolute top-0 mt-12 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="reportdropdown-button">
+                <li>
+                  <button @click="showReportDropdown=!showReportDropdown; filter='itemcode'; filterLabel='Mã sản phẩm'" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Mã sản phẩm</button>
+                </li>
+                <li>
+                  <button @click="showReportDropdown=!showReportDropdown; filter='itemtype'; filterLabel='Bộ/part'" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Bộ/part</button>
+                </li>
+                <li>
+                  <button @click="showReportDropdown=!showReportDropdown; filter='prodtype'; filterLabel='Loại hàng'" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Loại hàng</button>
+                </li>
+                <li>
+                  <button @click="showReportDropdown=!showReportDropdown; filter='factory'; filterLabel='Xưởng'" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Xưởng</button>
+                </li>
+                <li>
+                  <button @click="showReportDropdown=!showReportDropdown; filter='reporter'; filterLabel='Người báo cáo'" type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Người báo cáo</button>
+                </li>             
+            </div>
+
+            <div class="relative w-full">
+                <input hx-post="/sections/pack/overview/reportsearch" hx-target="#report-tbody" hx-trigger="input changed delay:500ms, search" hx-swap="outerHTML"
+                    type="search" name="reportsearch" id="reportsearch" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" 
+                        placeholder="Search" required />
+ 
+            </div>
+        </div>
+    </form>
+          
+  </div>
+  
+  <div id="reporttable-container" class="flex flex-col">
+    <div class="mx-1 my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">           
+              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Ngày
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Mã sản phẩm
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Sản lượng
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Giá trị
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Loại hàng
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Bộ/part
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Tên part
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Xưởng
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Người báo cáo
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      Báo cáo lúc
+                    </th>
+                  </tr>
+                </thead>
+ 
+                <tbody id="report-tbody" class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  {{range .packReports}}
+                  <tr>  
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Date}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Itemcode}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Qty}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Value}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.ProdType}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.ItemType}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Part}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Factory}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.Reporter}}</p>
+                      </div>
+                    </td>
+                    <td class="px-4 py-1 text-sm whitespace-nowrap">
+                      <div>
+                        <p class="text-gray-500 dark:text-gray-400">{{.CreatedDate}}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  {{end}}
+                </tbody>
+              </table>              
+            </div>
+        </div>     
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.getElementById("packingFromDate").valueAsDate = new Date();
+  document.getElementById("packingToDate").valueAsDate = new Date();
+</script>

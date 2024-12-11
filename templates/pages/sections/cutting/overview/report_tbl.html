@@ -1,0 +1,86 @@
+<div id="reporttable-container" class="flex flex-col">
+  <div class="mx-4 my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">           
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead class="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Mã kiện
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Ngày cắt
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <div>Sản lượng</div>
+                    <div class="text-xs">Σ {{.totalcbm}}</div>
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Loại hàng
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Cho Reeded
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Loại Gỗ
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Độ dày
+                  </th>
+                  <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Người báo cáo
+                  </th>       
+                </tr>
+              </thead>
+
+              <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                {{range .reports}}
+                <tr>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Wrnote}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Date}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Qtycbm}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.ProdType}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    {{if .Is25reeded}}
+                      <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd" viewBox="0 0 6.827 6.827"><defs><style>.fil0{fill:none}</style></defs><g id="Layer_x0020_1"><g id="_486851536"><path id="_486851488" class="fil0" d="M0 0h6.827v6.827H0z"/><path id="_486851320" class="fil0" d="M.853.853h5.12v5.12H.853z"/></g><g id="_486850480"><path id="_486851416" d="m2.1 5.058.001-.002L5.6 1.25a.216.216 0 0 1 .317.291L2.256 5.525l-.01.012A.215.215 0 0 1 2.1 5.6H2.1v-.542z" style="fill:#e53935"/><path id="_486850672" d="m2.086 5.073.014-.015V5.6a.215.215 0 0 1-.16-.063l-.97-.97a.216.216 0 0 1 .305-.305l.811.81z" style="fill:#ef5350"/></g></g></svg>
+                    {{end}}
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Woodtype}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Thickness}}</p>
+                    </div>
+                  </td>
+                  <td class="px-4 py-1 text-sm whitespace-nowrap">
+                    <div>
+                      <p class="text-gray-500 dark:text-gray-400">{{.Reporter}}</p>
+                    </div>
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>              
+          </div>
+      </div>     
+  </div>
+</div>

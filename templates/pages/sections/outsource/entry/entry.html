@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script defer src="/static/js/alpine.3.13.10.min.js"></script>
+  <script src="/static/js/htmx.min.js"></script>
+  <script src="/static/js/sweetalert.min.js"></script>
+
+  <title>Outsource Entry</title>
+</head>
+<body>
+  {{template "navbar"}}
+
+  <div hx-get="/sections/outsource/entry/loadform" hx-target="this" hx-trigger="load" hx-swap="outerHTML settle:100ms"></div>  
+</body>
+</html>
+
+<style>
+  .fade-in.htmx-added {
+    opacity: 0;
+  }
+  .fade-in {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+  }
+</style>

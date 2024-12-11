@@ -1,0 +1,51 @@
+<tbody id="report-tbody" class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+  {{range .panelcncReports}}
+  <tr>  
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Date}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Machine}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Type}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Qty}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Hours}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.StartAt}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.EndAt}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Reporter}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.CreatedDate}}</p>
+      </div>
+    </td>
+  </tr>
+  {{end}}
+</tbody>
