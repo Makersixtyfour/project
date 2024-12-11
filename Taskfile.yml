@@ -1,0 +1,6 @@
+version: '3'
+
+tasks:
+  tw:
+    cmds:
+      - npx tailwindcss -i ./tailwind_input/input.css -o ./static/css/style.css --watch

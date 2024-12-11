@@ -1,0 +1,57 @@
+<tbody id="report-tbody" 
+  class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+  {{range .prodvalueData}}
+  <tr>  
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Date}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Item}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.ProdType}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.ItemType}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Qty}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Value}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.From}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Factory}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.Reporter}}</p>
+      </div>
+    </td>
+    <td class="px-4 py-1 text-sm whitespace-nowrap">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400">{{.CreatedAt}}</p>
+      </div>
+    </td>
+  </tr>
+  {{end}}
+</tbody>

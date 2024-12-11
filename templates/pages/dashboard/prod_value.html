@@ -1,0 +1,31 @@
+<div class="fade-in" id="productionchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
+
+<script>
+var newData = { name :"root", children : [] },
+levels = ["date","factory", "prodtype"];
+
+{{.productiondata}}.forEach(function(d){
+
+var depthCursor = newData.children;
+
+levels.forEach(function( property, depth ){
+
+
+var index;
+depthCursor.forEach(function(child,i){
+if ( d[property] == child.name ) index = i;
+});
+
+if ( isNaN(index) ) {
+depthCursor.push({ name : d[property], children : []});
+index = depthCursor.length - 1;
+}
+
+depthCursor = depthCursor[index].children;
+
+if ( depth === levels.length - 1 ) depthCursor.push({ name : d.item, value : d.value });
+});
+});
+
+productionchart.append(drawProductionChart(newData))
+</script>

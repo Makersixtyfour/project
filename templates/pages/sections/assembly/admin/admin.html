@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script defer src="/static/js/alpinejs.collapse.min.js"></script>
+  <script defer src="/static/js/alpine.3.13.10.min.js"></script>
+  <script src="/static/js/htmx.min.js"></script>
+
+  <title>Assembly Admin</title>
+</head>
+<body class="bg-gray-100">
+  {{template "navbar"}}
+
+  <div x-data="{ 
+    activeAccordion: '', 
+    setActiveAccordion(id) { 
+        this.activeAccordion = (this.activeAccordion == id) ? '' : id 
+    } 
+  }" class="relative w-full mx-auto p-2 text-sm">
+
+    <div x-data="{ id: $id('accordion') }" :class="{ 'border-neutral-200/60 text-neutral-800' : activeAccordion==id, 'border-transparent text-black hover:text-neutral-800' : activeAccordion!=id }" class="duration-200 ease-out bg-white border rounded-md cursor-pointer group" x-cloak>
+      <button @click="setActiveAccordion(id)" class="flex items-center space-x-6 w-full px-5 py-4 font-semibold text-left select-none">
+        <div :class="{ 'rotate-90': activeAccordion==id }" class="relative flex items-center justify-center w-2.5 h-2.5 duration-300 ease-out">
+          <div class="absolute w-0.5 h-full bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+          <div :class="{ 'rotate-90': activeAccordion==id }" class="absolute w-full h-0.5 ease duration-500 bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+        </div>  
+        <span>Quản lý báo cáo sản lượng của Assembly</span>
+          
+      </button>
+
+      <div x-show="activeAccordion==id" x-collapse x-cloak>
+          <div class="p-5 pt-0">
+            <div hx-get="/sections/assembly/admin/loadreport" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- <div x-data="{ id: $id('accordion') }" :class="{ 'border-neutral-200/60 text-neutral-800' : activeAccordion==id, 'border-transparent text-neutral-600 hover:text-neutral-800' : activeAccordion!=id }" class="duration-200 ease-out bg-white border rounded-md cursor-pointer group" x-cloak>
+      <button @click="setActiveAccordion(id)" class="flex items-center space-x-6 w-full px-5 py-4 font-semibold text-left select-none">
+        <div :class="{ 'rotate-90': activeAccordion==id }" class="relative flex items-center justify-center w-2.5 h-2.5 duration-300 ease-out">
+            <div class="absolute w-0.5 h-full bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+            <div :class="{ 'rotate-90': activeAccordion==id }" class="absolute w-full h-0.5 ease duration-500 bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+        </div>
+          <span>Quản lý phiếu nhập gỗ</span>
+      </button>
+
+      <div x-show="activeAccordion==id" x-collapse x-cloak>
+          <div class="p-5 pt-0">
+            <div hx-get="/sections/cutting/admin/loadwrnote" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+          </div>
+      </div>
+    </div> -->
+
+    <!-- <div x-data="{ id: $id('accordion') }" :class="{ 'border-neutral-200/60 text-neutral-800' : activeAccordion==id, 'border-transparent text-neutral-600 hover:text-neutral-800' : activeAccordion!=id }" class="duration-200 ease-out bg-white border rounded-md cursor-pointer group" x-cloak>
+      <button @click="setActiveAccordion(id)" class="flex items-center justify-between w-full px-5 py-4 font-semibold text-left select-none">
+          <span>Can I use Pines with other libraries or frameworks?</span>
+          <div :class="{ 'rotate-90': activeAccordion==id }" class="relative flex items-center justify-center w-2.5 h-2.5 duration-300 ease-out">
+              <div class="absolute w-0.5 h-full bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+              <div :class="{ 'rotate-90': activeAccordion==id }" class="absolute w-full h-0.5 ease duration-500 bg-neutral-500 group-hover:bg-neutral-800 rounded-full"></div>
+          </div>
+      </button>
+      <div x-show="activeAccordion==id" x-collapse x-cloak>
+          <div class="p-5 pt-0">
+              Absolutely! Pines works with any other library or framework. Pines works especially well with the TALL stack.
+          </div>
+      </div>
+    </div> -->
+  </div>
+
+</body>
+</html>
+
+<style>
+  .fade-in.htmx-added {
+    opacity: 0;
+  }
+  .fade-in {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+  }
+</style>

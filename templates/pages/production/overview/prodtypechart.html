@@ -1,0 +1,7 @@
+<div id="prodtypechart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
+
+<script>
+  if ({{.prodtypeChartData}} != undefined) {
+    prodtypechart.append(drawProdTypeChart({{.prodtypeChartData}}, {{.rawData}}))
+  }
+</script>

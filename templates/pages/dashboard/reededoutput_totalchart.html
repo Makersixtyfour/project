@@ -1,0 +1,7 @@
+<div class="fade-in" id="reededoutputchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
+
+<script>
+if ({{.reededoutputData}}) {
+reededoutputchart.append(drawRdOpTotalChart({{.reededoutputData}}, {{.latestInventory}}))
+}
+</script>

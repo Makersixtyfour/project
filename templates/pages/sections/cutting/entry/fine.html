@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script defer src="/static/js/alpine.3.13.10.min.js"></script>
+  <script src="/static/js/htmx.min.js"></script>
+  <script src="/static/js/sweetalert.min.js"></script>
+  <title>Cutting Fine</title>
+</head>
+<body class="bg-gray-100">
+  {{template "navbar"}}
+
+  <section>
+    <div class="mx-auto max-w-screen-md px-4 py-16 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 gap-x-16 gap-y-8">
+        <div id="container" class="rounded-lg bg-white p-8 shadow-lg lg:p-12">
+          <form class="space-y-4" action="/sections/cutting/entry/sendfine" method="post">
+            <h1 class="text-center text-2xl font-bold sm:text-3xl">Báo Cáo Nhập Gỗ Tinh</h1>
+                 
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+              <div>
+                <label for="wood25" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="true" id="wood25" type="radio" tabindex="-1" name="finetype" />
+                  <span class="text-sm">Gỗ 25 cho Reeded</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="others" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="false" id="others" type="radio" tabindex="-1" name="finetype" />
+                  <span class="text-sm">Gỗ còn lại</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="finedate" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                  <input type="date" id="finedate" name="finedate" placeholder="Ngày"
+                    class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 "/>
+                  <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                    Ngày</span>
+                </label>
+              </div>
+         
+              <div>
+                <label for="fineqty" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                  <input type="number" id="fineqty" name="fineqty" placeholder="Số lượng" min="0" step="0.001"
+                    class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"/>
+                  <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                    Số lượng (m<sup>3</sup>) </span>
+                </label>
+              </div>
+
+              <!-- <div>
+                <label for="wrnotecode" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                  <input type="text" id="wrnotecode" name="wrnotecode" placeholder=""
+                    class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 "/>
+                  <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                    Mã kiện</span>
+                </label>
+              </div> -->
+            </div>
+
+
+
+            <!-- <div class="grid grid-cols-2 gap-4 text-center sm:grid-cols-3">
+              <div>
+                <label for="RedOak" tabindex="0"
+                  class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Red Oak" id="RedOak" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Red Oak</span>
+                </label>
+              </div>
+  
+              <div>
+                <label for="WhiteOak" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="White Oak" id="WhiteOak" type="radio" tabindex="-1" name="woodtype" checked/>
+                  <span class="text-sm">White Oak</span>
+                </label>
+              </div>
+  
+              <div>
+                <label for="Hickory" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Hickory" id="Hickory" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Hickory</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Beech" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Beech" id="Beech" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Beech</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Pine" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Pine" id="Pine" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Pine</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Fir" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Fir" id="Fir" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Fir</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Padouk" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Padouk" id="Padouk" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Padouk</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Walnut" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Walnut" id="Walnut" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Walnut</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="Poplar" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="Poplar" id="Poplar" type="radio" tabindex="-1" name="woodtype" />
+                  <span class="text-sm">Poplar</span>
+                </label>
+              </div>
+
+            </div> -->
+
+            <!-- <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div>
+                <label for="returnqty" class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+                  <input type="number" id="returnqty" name="returnqty" placeholder="Số lượng" min="0" step="0.001"
+                    class="p-3 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"/>
+                  <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                    Số lượng (m<sup>3</sup>) </span>
+                </label>
+              </div>
+  
+              <div>
+                <label for="wood25" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="true" id="wood25" type="radio" tabindex="-1" name="returntype" />
+                  <span class="text-sm">Gỗ 25</span>
+                </label>
+              </div>
+
+              <div>
+                <label for="others" tabindex="0"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white">
+                  <input class="sr-only" value="false" id="others" type="radio" tabindex="-1" name="returntype" />
+                  <span class="text-sm">Gỗ còn lại</span>
+                </label>
+              </div>
+
+            </div>             -->
+  
+            <div class="mt-4">
+              <button type="submit"
+                      class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto">
+                Gửi Báo Cáo</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+
+<script>  
+  document.getElementById("finedate").valueAsDate = new Date();
+  if ({{.showSuccessDialog}}) {
+    swal("Thành công", "Báo cáo đã được cập nhật", "success")
+  }
+  if ({{.showMissingDialog}}) {
+    swal("Thất bại", "Vui lòng nhập lại thông tin", "error")
+  }
+</script>

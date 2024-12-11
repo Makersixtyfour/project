@@ -1,0 +1,74 @@
+<section id="entry-container" class="fade-in">
+  <div class="mx-auto max-w-screen-sm px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-x-16 gap-y-8">
+      <form class="space-y-4" hx-post="/manhr/admin/sendentry" hx-target="#entry-container" hx-swap="outerHTML">
+        <div class="mt-4 text-center">
+          <button type="submit" class="inline-block rounded-full bg-black px-5 py-3 font-medium text-white sm:w-auto">
+            Gửi</button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-2">
+          <div class="flex justify-center mt-4 text-center">
+            <select class="flex text-center justify-center w-full h-10 px-3 py-2 text-sm bg-white border-2 text-neutral-600 border-neutral-600 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50"
+                name="section" id="section" class="p-3 peer w-full rounded-lg border-gray-300 text-gray-700">
+              <option value="" disabled selected>Chọn bộ phận</option>
+              <option value="cutting">Cutting</option>
+              <option value="lamination">Lamination</option>
+              <option value="reededline">Reededline</option>
+              <option value="veneer">Veneer</option>
+              <option value="panelcnc">PanelCNC</option>
+              <option value="finemill">Finemill</option>
+              <option value="assembly">Assembly</option>
+              <option value="woodfinish">WoodFinish</option>
+              <option value="packing">Packing</option>
+            </select>
+          </div>
+
+          <div class="mt-4 text-center">
+            <label for="occurdate" class="relative block rounded-md border">
+              <input type="date" id="occurdate" name="occurdate" placeholder="Ngày"
+                class="flex w-full h-10 px-3 py-2 text-sm bg-white border-2 text-neutral-600 border-neutral-600 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50"/>
+              <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                ngày<span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-2">  
+          <div class="mt-4 text-center">
+            <label for="hc" class="relative block rounded-md border">
+              <input type="number" id="hc" name="hc" min="0" step="1" placeholder=""
+                class="p-3 peer flex w-full h-10 px-3 py-2 text-sm bg-white border-2 text-neutral-600 border-neutral-600 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50"/>
+              <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Hiện diện</span>
+            </label>
+          </div>
+
+          <div class="mt-4 text-center">
+            <label for="workhr" class="relative block rounded-md border">
+              <input type="number" id="workhr" name="workhr" min="0" step="0.01" placeholder=""
+                class="p-3 peer flex w-full h-10 px-3 py-2 text-sm bg-white border-2 text-neutral-600 border-neutral-600 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-800 focus:text-neutral-800 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50"/>
+              <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+                Tổng giờ</span>
+            </label>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById("occurdate").valueAsDate = new Date();
+
+  if ({{.showSuccessDialog}}) {
+    swal("Thành công", {{.msgDialog}}, "success")
+  }
+  if ({{.showMissingDialog}}) {
+    swal("Thất bại", {{.msgDialog}}, "error")
+  }
+  if ({{.showErrDialog}}) {
+    swal("Thất bại", {{.msgDialog}}, "error")
+  }
+</script>

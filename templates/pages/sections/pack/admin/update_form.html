@@ -1,0 +1,70 @@
+<tr>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.Date}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.Itemcode}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <input name="qty" type="number" min="0" step="1" value="{{.packReports.Qty}}"
+        class="border-b border-gray-300 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer bg-inherit"/>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+    <input name="value" type="number" min="0" step="any" value="{{.packReports.Value}}"
+      class="border-b border-gray-300 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer bg-inherit"/>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.ProdType}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.ItemType}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.Part}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.Factory}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.Reporter}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.CreatedDate}}</p>
+    </div>
+  </td>
+  <td class="px-4 py-1 text-sm whitespace-nowrap">
+    <div>
+      <p class="text-gray-500 dark:text-gray-400">{{.packReports.ReportId}}</p>
+    </div>
+  </td>
+
+  <td class="px-4 py-4 text-sm whitespace-nowrap">
+    <div class="flex items-center gap-x-6">
+      <button hx-put="/sections/pack/admin/updatereport/{{.packReports.ReportId}}" hx-target="closest tr" hx-swap="outerHTML" hx-include="closest tr"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.3,5.3L9,15.6l-4.3-4.3l-1.4,1.4l5,5L9,18.4l0.7-0.7l11-11L19.3,5.3z" />
+          </svg>
+        </button>
+    </div>
+  </td>
+</tr>
