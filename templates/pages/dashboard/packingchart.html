@@ -1,8 +1,0 @@
-{{define "packingchart"}}
-<div id="packingchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
-
-<script src="/static/js/charts/packingchart.js"></script>
-<script>
-packingchart.append(drawPackingChart({{.packingData}})) 
-</script>
-{{end}}

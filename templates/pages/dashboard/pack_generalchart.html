@@ -1,9 +1,0 @@
-<div class="fade-in" id="packchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
-
-<script>
-if ({{.packingTarget}} == undefined) {
-packchart.append(drawPackChart1({{.packChartData}}))
-} else {
-packchart.append(drawPackChart2({{.packChartData}}, {{.packingTarget}}))
-}
-</script>

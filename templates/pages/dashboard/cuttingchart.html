@@ -1,9 +1,0 @@
-{{define "cuttingchart"}}
-<div id="cuttingchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
-
-<script src="/static/js/charts/cuttingchart.js"></script>
-<script>
-cuttingchart.append(drawCuttingChart2({{.cuttingData}}, {{.cuttingReturnData}}, {{.cuttingFineData}}, {{.targetactualData}}, {{.cuttingProdtypeData}}, {{.cuttingTarget}}))
-</script>
-{{end}}
-

@@ -1,8 +1,0 @@
-{{define "lamination"}}
-<div id="laminationchart" style="width: 100%; max-width: 1200px; margin: 0 auto"></div>
-
-<script src="/static/js/charts/laminationchart.js"></script>
-<script>
-laminationchart.append(drawLaminationChart1({{.laminationChartData}}, {{.laminationTarget}}))
-</script>
-{{end}}
