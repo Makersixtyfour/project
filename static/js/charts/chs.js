@@ -9,7 +9,7 @@ const drawAssemblyVTChart = (data, plandata, inventorydata, target) => {
   data.sort((a, b) => a.type.localeCompare(b.type))
   const series = d3.stack().keys(d3.union(data.map(d => d.type))).value(([, D], key) => D.get(key) === undefined ? 0 : D.get(key).value)(d3.index(data, d => d.date, d => d.type))
   const planseries = d3.stack().keys(d3.union(plandata.map(d => d.plantype))).value(([, D], key) => D.get(key) === undefined ? 0 : D.get(key).plan)(d3.index(plandata, d => d.date, d => d.plantype))
-  const x = d3.scaleBand().domain(d3.union(data.map(d=> d.date), plandata.map(d => d.date))).range([0, innerWidth]).padding(0.1);
+  const x = d3.scaleBand().domain(plandata.map(d => d.date)).range([0, innerWidth]).padding(0.1);
   const y = d3.scaleLinear().domain([0,  d3.max([d3.max(series, d => d3.max(d, d => d[1])), target == undefined ? 0 : d3.max(target, d => d.value)])]).rangeRound([innerHeight, 0]).nice()
   const color = d3.scaleOrdinal().domain(["X1-brand", "X1-rh", "X2-brand", "X2-rh", "X1-white", "X2-white", "brand", "rh", "X7-brand", "X7-rh", "X3-brand", "X3-rh"]).range(["#DFC6A2", "#A5A0DE", "#DFC6A2", "#A5A0DE", "#D1D1D1", "#D1D1D1", "#DFC6A2", "#A5A0DE", "#DFC6A2", "#A5A0DE", "#DFC6A2", "#A5A0DE"]).unknown("white");
   const svg = d3.creates("svg").attr("viewBox", [0, 0, width, height])
